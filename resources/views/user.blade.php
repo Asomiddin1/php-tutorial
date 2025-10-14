@@ -1,0 +1,13 @@
+<x-layout>
+    <x-slot:heading>
+        <h1>User Detail Page</h1>
+     </x-slot:heading>
+     <div class="w-2/3  flex justify-between mx-auto">
+        <h1 class="text-[22px] font-semibold ">{{ $user['name'] }}</h1>
+        <p class="text-gray-400">Email: {{ $user['email'] }}</p>
+        <a href="/users" class="text-blue-500 underline">Back to Users List</a>
+     </div>
+     <div>
+        <p class="w-2/3 mx-auto mt-4">{{ $user['name'] }} lorem ipsum dolor sit amet consectetur, adipisicing elit. Enim maiores neque beatae ab ea expedita molestias consequatur dolores, labore cupiditate accusamus tempore, dolorum, magni cum possimus ratione libero in! Eius cupiditate in id aperiam maiores unde porro laboriosam repudiandae sapiente, mollitia laborum? Ducimus eos porro officiis error ex, quis libero exercitationem dolorem, quos veniam in cumque. Ea reprehenderit eos incidunt! Sint ab quasi quos esse officia corporis provident dolorum animi, totam saepe. Mollitia corrupti atque quidem eos ad doloremque magni repudiandae, libero quibusdam, dolorum ea culpa repellat sunt. Numquam accusamus officiis quasi inventore quod unde explicabo repellat possimus quo vel sed porro labore exercitationem molestias, voluptatem rerum perferendis totam aliquam repudiandae voluptate a sequi ipsa obcaecati eius? Voluptatibus, facere labore? Eos quos voluptate quam, laudantium exercitationem quisquam eum totam vero corrupti aperiam vel ducimus quod neque. Dolore tempore dicta aut officiis in! Rerum illo minus sint totam nostrum deserunt porro quod magni et vitae fugiat iste similique numquam velit consequuntur, delectus aperiam voluptates. Excepturi rerum sapiente nihil unde harum explicabo, quasi nemo consequatur dicta eum et similique placeat id officiis qui recusandae neque delectus iusto. Laboriosam natus quia harum. Asperiores provident libero quidem ducimus mollitia rem eum sed, pariatur quisquam quaerat eaque placeat, aut tenetur quas doloremque eligendi consequatur consectetur! Incidunt labore eos sapiente ipsam recusandae corrupti voluptate eaque! Culpa temporibus rerum blanditiis hic inventore? Minus exercitationem corporis, esse non quisquam ipsam! Debitis tempora, nesciunt eius placeat officia quibusdam nobis et autem nostrum repellat voluptate libero aspernatur, nulla, mollitia aliquid voluptatem exercitationem architecto maiores. Porro rerum doloribus possimus consequatur ut qui similique eum sapiente dolorem unde cupiditate adipisci perspiciatis, esse optio error iste suscipit aliquid nam. Repellendus, ad! Optio iure aut architecto fugit tempore voluptate odio doloremque quas neque laudantium illum, magnam, at minus repellendus voluptates quod ipsa, accusamus cumque.</p>
+     </div>
+</x-layout>
