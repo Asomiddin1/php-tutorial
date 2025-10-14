@@ -19,6 +19,9 @@
         <li><a href="/contact">Contact</a></li>
       </ul>
     </nav>
+    <div class="bg-gray-200 p-4 text-start text-[20px] font-semibold">
+        {{ $heading }}
+    </div>
     {{ $slot }} 
 </body>
 </html>

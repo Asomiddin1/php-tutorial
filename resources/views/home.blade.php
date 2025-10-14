@@ -1,5 +1,6 @@
 <x-layout>
-    <h1 class="text-3xl font-bold underline">
-        Hello, world!
-    </h1>
+     <x-slot:heading>
+        <h1>Home page</h1>
+     </x-slot:heading>
+     <h1>home</h1>
 </x-layout>
