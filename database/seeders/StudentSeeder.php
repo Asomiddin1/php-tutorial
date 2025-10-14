@@ -4,36 +4,26 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Student;
+use Faker\Factory as Faker;
 
 class StudentSeeder extends Seeder
 {
     public function run(): void
     {
-        $count = 100;  // nechta student yaratamiz
-        $base = 231;   // bosh raqam
+        $faker = Faker::create();
 
-        for ($i = 0; $i < $count; $i++) {
-            // 231 + tasodifiy 4 xonali raqam → masalan 2312136
-            $randNum = rand(1000, 9999);
-            $studentId = (int)("{$base}{$randNum}");
+        foreach (range(1, 100) as $index) {
+            $studentId = $faker->unique()->numberBetween(2310000, 2319999); // 231 dan boshlansin
 
-            // Factory orqali random ism va familiya yaratamiz
-            $student = Student::factory()->make();
-            $name = $student->name;
-            $lastname = $student->lastname;
-
-            // Ismning 1-harfi kichik
-            $firstLetter = strtolower(substr($name, 0, 1));
-
-            // Email: student_id + ism harfi + @jdu.uz
-            // Masalan: 2312136a@jdu.uz
-            $email = "{$studentId}{$firstLetter}@jdu.uz";
+            // ism bosh harfini kichik qilib olish
+            $name = strtolower($faker->firstName);
+            $lastname = $faker->lastName;
 
             Student::create([
                 'student_id' => $studentId,
                 'name' => $name,
                 'lastname' => $lastname,
-                'email' => $email,
+                'email' => $studentId . 'a@jdu.uz',
             ]);
         }
     }
