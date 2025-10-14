@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+use App\Models\Student;
 
 class Users {
     public static function all() {
@@ -19,9 +21,22 @@ Route::get('/', function () {
 Route::get('/about', function () {
     return view('about');
 });
-Route::get('/students', function () {
-    return view('students');
+
+Route::get('/students', function (Request $request) {
+    $id = $request->query('id');
+
+    if ($id) {
+        $students = Student::where('student_id', $id)->paginate(10);
+    } else {
+        $students = Student::paginate(10);
+    }
+
+    return view('students', [
+        'students' => $students,
+        'searchId' => $id
+    ]);
 });
+
 Route::get('/jobs', function () {
     return view('jobs');
 });
