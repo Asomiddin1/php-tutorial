@@ -40,6 +40,7 @@ Route::get('/students', function (Request $request) {
 Route::get('/jobs', function () {
     return view('jobs');
 });
+
 Route::get('/users', function () {
     $users = Users::all();
 
