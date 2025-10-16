@@ -28,13 +28,28 @@ Route::get('/students', function (Request $request) {
     if ($id) {
         $students = Student::where('student_id', $id)->paginate(10);
     } else {
-        $students = Student::paginate(10);
+        $students = Student::latest()->paginate(10);
     }
 
     return view('students', [
         'students' => $students,
         'searchId' => $id
     ]);
+});
+
+Route::get('/student/create' , function () {
+    return view('create_student');
+});
+
+Route::post('/student/store' , function () {
+    Student::create([
+        'student_id' => request('student_id'),
+        'name' => request('name'),
+        'lastname' => request('lastname'),
+        'email' => request('email'),
+    ]);
+
+    return redirect('/students');
 });
 
 Route::get('/jobs', function () {

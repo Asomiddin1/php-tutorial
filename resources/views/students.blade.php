@@ -13,6 +13,7 @@
               >
               <button class="bg-blue-400 hover:bg-blue-500 text-white px-4 py-2 rounded-md text-sm">Search</button>
           </form>
+          <button class="text-sm font-semibold bg-blue-600 text-white py-2 px-2 rounded-xl cursor-pointer"><a href="/student/create">Create Student</a></button>
      </div>
     </x-slot:heading>
 
