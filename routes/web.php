@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Http\Controllers\StudentController;
 
 class Users {
     public static function all() {
@@ -14,113 +15,20 @@ class Users {
     }
 }
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::view('/', 'home');
+Route::view('/jobs', 'jobs');
+Route::view('/about', 'about');
+Route::view('/contact', 'contact');
 
-Route::get('/about', function () {
-    return view('about');
-});
 
-// students
-Route::get('/students', function (Request $request) {
-    $id = $request->query('id');
-
-    if ($id) {
-        $students = Student::where('student_id', $id)->paginate(10);
-    } else {
-        $students = Student::latest()->paginate(10);
-    }
-
-    return view('student/students', [
-        'students' => $students,
-        'searchId' => $id
-    ]);
-});
-
-// create student
-
-Route::get('/student/create' , function () {
-    return view('student/create_student');
-});
-
-// store student
-Route::post('/student/store' , function () {
-    
-    request()->validate([
-        'student_id' => 'required|unique:students,student_id',
-        'name' => ['required', 'min:3'],
-        'lastname' => ['required' , 'min:5'],
-        'email' => 'required|unique:students,email',
-    ]);
-
-    Student::create([
-        'student_id' => request('student_id'),
-        'name' => request('name'),
-        'lastname' => request('lastname'),
-        'email' => request('email'),
-    ]);
-
-    return redirect('/students');
-});
-
-// one student
-
-Route::get('/student/{id}', function ($id) {
-    $student = Student::where('student_id', $id)->first();
-    
-    if (!$student) {
-        abort(404, 'Student not found');
-    }
-
-    return view('student/one-student', ['student' => $student]);
-});
-// edit student
-Route::get('/student/{id}/edit', function ($id) {
-    $student = Student::where('student_id', $id)->first();  
-    if (!$student) {
-        abort(404, 'Student not found');
-    }
-    return view('student/edit-student', ['student' => $student]);
-});
-// update student
-Route::patch('/student/{id}', function ($id) {
-    $student = Student::where('student_id', $id)->first();  
-    if (!$student) {
-        abort(404, 'Student not found');
-    }
-
-    request()->validate([
-        'student_id' => 'required|unique:students,student_id,' . $student->id,
-        'name' => ['required', 'min:3'],
-        'lastname' => ['required', 'min:5'],
-        'email' => 'required|unique:students,email,' . $student->id,
-    ]);
-
-    $student->update([
-        'student_id' => request('student_id'),
-        'name' => request('name'),
-        'lastname' => request('lastname'),
-        'email' => request('email'),
-    ]);
-
-    return redirect('/student/' . $student->student_id);
-});
-// delete student
-Route::delete('/student/{id}', function ($id) {
-    $student = Student::where('student_id', $id)->first();
-    if (!$student) {
-        abort(404, 'Student not found');
-    }
-    $student->delete();
-    return redirect('/students');
-});
-
-// jobs
-
-Route::get('/jobs', function () {
-    return view('jobs');
-});
+// students crud
+Route::get('/students', [StudentController::class, 'index']);
+Route::get('/student/create' , [StudentController::class, 'createStudent']);
+Route::post('/student/store' , [StudentController::class, 'store']);
+Route::get('/student/{id}', [StudentController::class, 'oneStudent']);
+Route::get('/student/{id}/edit', [StudentController::class, 'editStudent']);
+Route::patch('/student/{id}', [StudentController::class, 'updateStudent']);
+Route::delete('/student/{id}', [StudentController::class, 'deleteStudent']);
 
 // users
 Route::get('/users', function () {
@@ -142,7 +50,4 @@ Route::get('/user/{id}', function ($id) {
     return view('user/user', compact('user'));
 });
 
-// contact
-Route::get('/contact', function () {
-    return view('contact');
-});
+
