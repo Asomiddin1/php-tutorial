@@ -42,6 +42,14 @@ Route::get('/student/create' , function () {
 });
 
 Route::post('/student/store' , function () {
+    
+    request()->validate([
+        'student_id' => 'required|unique:students,student_id',
+        'name' => ['required', 'min:3'],
+        'lastname' => ['required' , 'min:5'],
+        'email' => 'required|unique:students,email',
+    ]);
+
     Student::create([
         'student_id' => request('student_id'),
         'name' => request('name'),
