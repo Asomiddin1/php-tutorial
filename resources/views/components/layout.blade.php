@@ -16,6 +16,19 @@
         <li  class="{{ request()->is('users') ? 'bg-slate-800 text-white px-4 py-2 rounded-md' : 'px-4 py-2 hover:text-white' }}"><a href="/users">Users</a></li>
         <li  class="{{ request()->is('jobs') ? 'bg-slate-800 text-white px-4 py-2 rounded-md' : 'px-4 py-2 hover:text-white' }}"><a href="/jobs">Jobs</a></li>
         <li  class="{{ request()->is('contact') ? 'bg-slate-800 text-white px-4 py-2 rounded-md' : 'px-4 py-2 hover:text-white' }}"><a href="/contact">Contact</a></li>
+        @guest
+        <li class="{{ request()->is('login', 'register') ? 'bg-slate-800 text-white px-4 py-2 rounded-md' : 'px-4 py-2 hover:text-white bg-blue-500 rounded-md' }}">
+        <a href="/login">Sign in</a>
+        </li>
+        @endguest
+        @auth
+        <li>
+        <form method="POST" action="/logout">
+            @csrf
+            <button type="submit" class="px-4 py-2 hover:text-white bg-red-500 rounded-md cursor-pointer">Logout</button>
+        </form>
+        </li>
+        @endauth  
        </ul>
     </nav>
     <div class="bg-gray-200 p-4 text-start text-[20px] font-semibold">

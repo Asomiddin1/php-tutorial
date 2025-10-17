@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 
 class Users {
     public static function all() {
@@ -29,6 +31,16 @@ Route::get('/student/{id}', [StudentController::class, 'oneStudent']);
 Route::get('/student/{id}/edit', [StudentController::class, 'editStudent']);
 Route::patch('/student/{id}', [StudentController::class, 'updateStudent']);
 Route::delete('/student/{id}', [StudentController::class, 'deleteStudent']);
+
+// Auth
+Route::get('/register', [RegisterController::class, 'create']);
+Route::post('/register', [RegisterController::class, 'store']);
+// Login
+Route::get('/login', [LoginController::class, 'create']);
+Route::post('/login', [LoginController::class, 'store']);
+Route::post('/logout', [LoginController::class, 'logout']);
+
+
 
 // users
 Route::get('/users', function () {
