@@ -6,19 +6,11 @@ use App\Models\Student;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-
-class Users {
-    public static function all() {
-        return [
-            ['id'=>1, 'name' => 'Asomiddin', 'email' => 'asomiddin@gmail.com'],
-            ['id'=>2, 'name' => 'Shoxrux', 'email' => 'shoxrux@gmail.com'],
-            ['id'=>3, 'name' => 'Ogabek', 'email' => 'ogabek@gmail.com'],
-        ];
-    }
-}
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PostController;
+use App\Models\User;
 
 Route::view('/', 'home');
-Route::view('/jobs', 'jobs');
 Route::view('/about', 'about');
 Route::view('/contact', 'contact');
 
@@ -32,34 +24,27 @@ Route::get('/student/{id}/edit', [StudentController::class, 'editStudent']);
 Route::patch('/student/{id}', [StudentController::class, 'updateStudent']);
 Route::delete('/student/{id}', [StudentController::class, 'deleteStudent']);
 
-// Auth
+// Auth register
 Route::get('/register', [RegisterController::class, 'create']);
 Route::post('/register', [RegisterController::class, 'store']);
-// Login
-Route::get('/login', [LoginController::class, 'create']);
+// Login va logout
+Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login', [LoginController::class, 'store']);
 Route::post('/logout', [LoginController::class, 'logout']);
 
-
-
 // users
-Route::get('/users', function () {
-    $users = Users::all();
+Route::get('/users', [UserController::class, 'index']);
+Route::get('/user/{id}', [UserController::class, 'oneUser']);
 
-    return view('user/users' , ['users' => $users]);
-});
-Route::get('/user/{id}', function ($id) {
-    $users = Users::all();
+// posts
+Route::get('/posts', [PostController::class, 'index']);
+Route::get('/post/{id}', [PostController::class, 'onePost']);
+Route::get('/posts/create', [PostController::class, 'create'])->middleware('auth');
+Route::post('/posts', [PostController::class, 'store']);
+Route::get('/post/{id}/edit', [PostController::class, 'edit'])->middleware('auth');
+Route::patch('/post/{id}', [PostController::class, 'update'])->middleware('auth');
+Route::delete('/post/{id}', [PostController::class, 'delete'])->middleware('auth');
 
-    // ID bo‘yicha to‘g‘ri userni topish
-    $user = collect($users)->firstWhere('id', $id);
 
-    // Agar topilmasa 404 chiqsin
-    if (!$user) {
-        abort(404, 'User not found');
-    }
-
-    return view('user/user', compact('user'));
-});
 
 

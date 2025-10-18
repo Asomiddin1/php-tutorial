@@ -14,7 +14,7 @@
         <li class="{{ request()->is('about') ? ' bg-slate-800 text-white px-4 py-2 rounded-md' : 'px-4 py-2 hover:text-white' }}"><a href="/about">About</a></li>
         <li  class="{{ request()->is('students') ? 'bg-slate-800 text-white px-4 py-2 rounded-md' : 'px-4 py-2 hover:text-white' }}"><a href="/students">Students</a></li>
         <li  class="{{ request()->is('users') ? 'bg-slate-800 text-white px-4 py-2 rounded-md' : 'px-4 py-2 hover:text-white' }}"><a href="/users">Users</a></li>
-        <li  class="{{ request()->is('jobs') ? 'bg-slate-800 text-white px-4 py-2 rounded-md' : 'px-4 py-2 hover:text-white' }}"><a href="/jobs">Jobs</a></li>
+        <li  class="{{ request()->is('posts') ? 'bg-slate-800 text-white px-4 py-2 rounded-md' : 'px-4 py-2 hover:text-white' }}"><a href="/posts">Posts</a></li>
         <li  class="{{ request()->is('contact') ? 'bg-slate-800 text-white px-4 py-2 rounded-md' : 'px-4 py-2 hover:text-white' }}"><a href="/contact">Contact</a></li>
         @guest
         <li class="{{ request()->is('login', 'register') ? 'bg-slate-800 text-white px-4 py-2 rounded-md' : 'px-4 py-2 hover:text-white bg-blue-500 rounded-md' }}">
