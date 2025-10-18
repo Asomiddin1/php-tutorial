@@ -39,8 +39,7 @@
                    </div>
                    
                    <div class="flex items-center gap-3">
-                       @auth
-                         @if(auth()->id() === $post->user_id) 
+                        @can('edit', $post)
                         <a href="/post/{{ $post->id }}/edit" 
                             class="text-md bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg font-semibold transition shadow-md">
                             Tahrirlash
@@ -54,9 +53,8 @@
                                 O'chirish
                             </button>
                         </form>
-                        @endif
-                       @endauth
-
+                        @endcan
+                      
                   </div>
                    
                 </div>

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Auth\Access\AuthorizationException;
+
 
 class PostController extends Controller
 {
@@ -62,7 +62,7 @@ class PostController extends Controller
 
         // 2. Gate yordamida ruxsatni tekshirish
         // 'autorise' o'rniga 'authorize' bo'lishi kerak.
-        Gate::authorize('post-edit', $post); 
+        Gate::authorize('edit', $post); 
         
         // 3. Agar ruxsat berilsa, tahrirlash sahifasini ko'rsatish
         return view('posts.post-edit', ['post' => $post]);
