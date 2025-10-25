@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
+
 
 
 class PostController extends Controller
@@ -22,17 +24,19 @@ class PostController extends Controller
     // firstOrFail() usuli 404 xatosini avtomatik chiqaradi.
     $requestedPost = Post::with('user')->findOrFail($id);
     
-    // 2. Barcha postlarni emas, faqat 3-5 ta so'nggi postlarni yuklash.
-    // Bu 'Barcha Postlar' sidebar'i uchun optimallashtirilgan.
+    
+
     $recentPosts = Post::with('user')
                         ->where('id', '!=', $id) // Joriy postni ro'yxatdan chiqarish
                         ->latest()
                         ->get();
+
     
     // 3. Ma'lumotlarni yagona massivda Blade'ga yuborish.
     return view('posts.one-post', [
         'post' => $requestedPost,
         'posts' => $recentPosts, // O'zgartirilgan nom (yaxshiroq tushunish uchun)
+
     ]);
 }
     public function create()
@@ -47,11 +51,13 @@ class PostController extends Controller
             'body' => 'required|string',
         ]);
 
-        Post::create([
+       $post = Post::create([
             'user_id' => Auth()->id(),
             'title'   => $request->input('title'),
-            'body'    => $request->input('body'),
+            'body'    => $request->input('body'), 
         ]);
+
+        Mail::to(Auth()->user()->email)->send(new \App\Mail\PostAdded($post));
 
         return redirect('/posts')->with('success', 'Post created successfully!');
     }
@@ -85,7 +91,7 @@ class PostController extends Controller
             'title' => $request->input('title'),
             'body' => $request->input('body'),
         ]);
-
+        Gate::authorize('edit', $post); 
         return redirect('/post/' . $id)->with('success', 'Post updated successfully!');
     }
     public function delete($id)
@@ -96,6 +102,7 @@ class PostController extends Controller
             abort(404, 'Post not found');
         }
         $post->delete();
+        Gate::authorize('delete', $post); 
         return redirect('/posts')->with('success', 'Post deleted successfully!');
         
     }
