@@ -11,6 +11,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Models\User;
+use App\Jobs\PostJob;
+use App\Models\Post;
+
+
 
 Route::view("/", "home");
 Route::view("/about", "about");
@@ -25,11 +29,11 @@ Route::get("/student/{id}/edit", [StudentController::class, "editStudent"]);
 Route::patch("/student/{id}", [StudentController::class, "updateStudent"]);
 Route::delete("/student/{id}", [StudentController::class, "deleteStudent"]);
 // mail
-Route::get("/mail", function () {
-  
-    return "Done";
+Route::get('/test' , function () {
+    $post = Post::find(20);
+    PostJob::dispatch($post);
+    return "done";
 });
-
 // Auth register
 Route::get("/register", [RegisterController::class, "create"]);
 Route::post("/register", [RegisterController::class, "store"]);

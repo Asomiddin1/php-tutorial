@@ -57,7 +57,7 @@ class PostController extends Controller
             'body'    => $request->input('body'), 
         ]);
 
-        Mail::to(Auth()->user()->email)->send(new \App\Mail\PostAdded($post));
+        Mail::to(Auth()->user()->email)->queue(new \App\Mail\PostAdded($post));
 
         return redirect('/posts')->with('success', 'Post created successfully!');
     }
