@@ -16,7 +16,7 @@ class RegisterController extends Controller
     }
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+          $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
@@ -33,6 +33,6 @@ class RegisterController extends Controller
 
         Auth::login($user);
 
-        return redirect('/')->with('success', 'Registration successful!');
+         return redirect('/')->with('success', 'Registration successful!');
     }
 }
